@@ -43,3 +43,4 @@ Or on Linux:
 ```bash
 python3 dashboard.py
 ```
+### 4. How to Play

@@ -140,7 +140,7 @@ class Solution:
     regions: List[Region]           # one per seed, same order as puzzle.seeds
 
 
-def _shape_ok(shape: str, w: int, h: int) -> bool:
+def _shape_ok(shape, w, h):
     if shape == "square":
         return w == h
     if shape == "wide":
@@ -166,10 +166,10 @@ class PatchesAStarSolver:
         self.domain: List[List[int]] = [self._build_domain(k) for k in range(self.K)]
 
     # ---------------- precomputation ----------------
-    def _coord(self, i: int) -> Coord:
+    def _coord(self, i):
         return divmod(i, self.C)
 
-    def _neighbor_masks(self) -> List[int]:
+    def _neighbor_masks(self):
         nb = []
         for i in range(self.N):
             r, c = divmod(i, self.C)
@@ -181,13 +181,13 @@ class PatchesAStarSolver:
             nb.append(m)
         return nb
 
-    def _rect_mask(self, r0: int, c0: int, h: int, w: int) -> int:
+    def _rect_mask(self, r0, c0, h, w):
         m = 0
         for r in range(r0, r0 + h):
             m |= ((1 << w) - 1) << (r * self.C + c0)
         return m
 
-    def _build_domain(self, k: int) -> List[int]:
+    def _build_domain(self, k):
         """All rectangles that could ever be seed k's final region."""
         seed = self.seeds[k]
         sr, sc = seed.pos
@@ -386,7 +386,7 @@ class PatchesAStarSolver:
                     emit(f"    + assign {self._coord(x)} -> {self.seeds[k].name}  (g={g2}, h={h2})", "assign")
 
         emit("Frontier exhausted: no valid partition exists for this puzzle.", "prune")
-        return finish(None, "exhausted")
+        return finish(None, "exhausted")  
 
     def _build_solution(self, owned, parent) -> Solution:
         steps = []
